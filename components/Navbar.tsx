@@ -18,42 +18,14 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-blue-500 text-white p-4 flex justify-between">
-      <h1 className="text-xl font-bold">
-        <Link href="/">NextJS News</Link>
-      </h1>
-      <div>
-        <Link href="/" className="mx-2">
-          Trang chủ
-        </Link>
-        <Link href="/membership" className="mx-2">
-          Thành viên
-        </Link>
-        <Link href="/events" className="mx-2">
-          Sự kiện
-        </Link>
-
-        {!isLoggedIn ? (
-          <>
-            <Link href="/auth/login" className="mx-2">
-              Đăng nhập
-            </Link>
-            <Link
-              href="/auth/register"
-              className="mx-2 bg-green-500 px-3 py-1 rounded"
-            >
-              Đăng ký
-            </Link>
-          </>
-        ) : (
-          <button
-            onClick={handleLogout}
-            className="mx-2 bg-red-500 px-3 py-1 rounded"
-          >
-            Đăng xuất
-          </button>
-        )}
-      </div>
-    </nav>
+<nav className="flex justify-between items-center p-4 bg-blue-800 text-white">
+  <div className="text-2xl font-bold">ITS Singapore</div>
+  <ul className="flex gap-6">
+    <li className="hover:text-gray-300"><Link href="#">Home</Link></li>
+    <li className="hover:text-gray-300"><Link href="#">About</Link></li>
+    <li className="hover:text-gray-300"><Link href="#">Membership</Link></li>
+  </ul>
+  <button className="px-4 py-2 bg-white text-blue-800 rounded-lg">Login</button>
+</nav>
   );
 }
