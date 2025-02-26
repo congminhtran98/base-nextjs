@@ -12,8 +12,12 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"], // Dùng biến CSS đã khai báo
+      },
     },
   },
   plugins: [],
+  darkMode: "class",
 };
 export default config;
