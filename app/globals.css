@@ -25,3 +25,8 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Tạo góc cắt phía dưới bên phải */
+.clip-path-triangle {
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+}
