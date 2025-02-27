@@ -1,7 +1,23 @@
-export default function Home() {
+import CouncillorsSlider from "@/components/ui/CouncillorsSlider";
+import AboutUs from "@/components/About/AboutUs";
+import VisionBox from "@/components/About/VisionBox";
+import OurMission from "@/components/About/OurMission";
+import VideoSection from "@/components/About/VideoSection";
+import Banner from "@/components/ui/Banner";
+
+export default function About() {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <h1 className="text-3xl font-bold text-blue-600">Trang Giới thiệu</h1>
+      <div className=" mt-[84px]">
+        <Banner
+          backgroundImage="/images/banner1.png"
+          title="Join ITS Singapore"
+          subtitle="Committed to the growth of Intelligent Transport Systems in Singapore"
+        />
+        <AboutUs />
+        <VisionBox />
+        <OurMission />
+        <VideoSection />
+        <CouncillorsSlider />
       </div>
     );
   }

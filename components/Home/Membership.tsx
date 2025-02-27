@@ -54,6 +54,7 @@ export default function Membership() {
 
       {/* Góc cắt phía dưới bên phải */}
       <div className="absolute bottom-0 right-0 w-[200px] h-[120px] bg-white clip-path-triangle"></div>
+    
     </section>
   );
 }

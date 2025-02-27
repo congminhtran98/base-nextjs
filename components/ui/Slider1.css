@@ -1,0 +1,22 @@
+/* Custom Pagination */
+.custom-pagination1 .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+    background-color: #CFCBF3; /* Màu xám nhạt */
+    border-radius: 50%;
+    border-color: #BDC1CA;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .custom-pagination1 .swiper-pagination-bullet-active {
+    width: 38px; /* Kéo dài thành hình pill */
+    height: 16px;
+    background-color: white; /* Màu trắng */
+    border-radius: 10px;
+  }
+  
+  /* Fix Swiper Pagination Bị Dài */
+  .swiper-pagination-horizontal {
+    width: auto !important;  /* Chỉ lấy đúng kích thước của các chấm */
+  }
+  
