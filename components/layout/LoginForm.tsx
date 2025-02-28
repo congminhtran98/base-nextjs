@@ -1,78 +1,90 @@
 "use client";
-import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
 
-type LoginFormData = {
-  username: string;
-  password: string;
-};
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
+  } = useForm();
 
-  const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    console.log("Dữ liệu form:", data);
+  const onSubmit = (data: any) => {
+    console.log("Login Data:", data);
   };
 
   return (
-    <div className="m-20 max-w-sm mx-auto px-4">
-      <div className="flex flex-col items-center mb-2">
-        <Image
-          src="/images/logoCompany.png"
-          width={257}
-          height={70}
-          alt="ITS Singapore Logo"
-        />
-        <h2 className="mt-1 text-2xl font-normal text-black">Member Login</h2>
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
-        <div>
-          <label htmlFor="username" className="text-sm text-black">
-            User Name
-          </label>
-          <input
-            id="username"
-            type="text"
-            placeholder="User Name"
-            className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-            aria-label="User Name"
-            {...register("username", { required: "User Name là bắt buộc" })}
+    <div className="my-10 w-full flex justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-white p-8 max-w-[668px] w-full text-center"
+      >
+        {/* Logo */}
+        <div className="flex justify-center mb-4">
+          <Image
+            src="/images/logo.svg"
+            alt="ITS Singapore"
+            width={257}
+            height={70}
           />
-          {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
         </div>
 
-        <div>
-          <label htmlFor="password" className="text-sm text-black">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-            aria-label="Password"
-            {...register("password", { required: "Password là bắt buộc" })}
-          />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-        </div>
+        {/* Title */}
+        <h2 className="text-2xl font-normal text-black mb-[50px]">
+          Member Login
+        </h2>
 
-        <button
-          type="submit"
-          className="w-full px-4 py-2 text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        >
-          Login
-        </button>
-      </form>
+        {/* Form */}
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* User Name */}
+          <div className="relative">
+            <input
+              {...register("username", { required: true })}
+              placeholder="User Name"
+              className="w-full border text-base border-gray-300 px-4 pt-5 pb-2 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+            />
+            <label className="absolute font-medium left-4 top-1 text-black text-xs transition-all pointer-events-none">
+              User Name
+            </label>
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">User Name is required</p>
+            )}
+          </div>
+
+          {/* Password */}
+          <div className="relative">
+            <input
+              {...register("password", { required: true })}
+              type="password"
+              placeholder="Password"
+              className="w-full border text-base border-gray-300 px-4 pt-5 pb-2 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+            />
+            <label className="absolute font-medium left-4 top-1 text-black text-xs transition-all pointer-events-none">
+              Password
+            </label>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">Password is required</p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div className="md:text-left">
+            <motion.button
+              type="submit"
+              className="w-full md:w-[280px] py-3 bg-[#6355D8] text-white font-semibold rounded-full hover:bg-[#4F3BB2] transition"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Login
+            </motion.button>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 }

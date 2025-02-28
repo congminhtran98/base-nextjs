@@ -8,11 +8,11 @@ import Banner from "@/components/ui/Banner";
 export default function About() {
     return (
       <div className=" mt-[84px]">
-        <Banner
+        {/* <Banner
           backgroundImage="/images/banner1.png"
           title="Join ITS Singapore"
           subtitle="Committed to the growth of Intelligent Transport Systems in Singapore"
-        />
+        /> */}
         <AboutUs />
         <VisionBox />
         <OurMission />
