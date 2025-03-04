@@ -1,7 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export default function MembershipForm() {
   const {
@@ -14,51 +15,38 @@ export default function MembershipForm() {
     console.log(data);
   };
 
+  // Ref để kiểm tra khi nào component vào tầm nhìn
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.3, once: true });
+
   return (
-    <section className="w-full py-10">
-      <div className="container mx-auto max-w-6xl bg-white">
+    <section ref={ref} className="w-full py-10">
+      <div className="container mx-auto max-w-6xl bg-white p-6 rounded-lg shadow-lg">
         {/* Tiêu đề */}
         <motion.h2
           className="text-[32px] font-medium text-black mb-6"
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           Join us as Member
         </motion.h2>
 
         {/* Form */}
-        <form
+        <motion.form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-wrap gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {/** Các input field + submit button đều có cùng chiều rộng */}
           {[
-            {
-              name: "email",
-              label: "Email",
-              type: "email",
-              placeholder: "Email",
-            },
+            { name: "email", label: "Email", type: "email", placeholder: "Email" },
             { name: "name", label: "Name", type: "text", placeholder: "Name" },
-            {
-              name: "organisation",
-              label: "Organisation",
-              type: "text",
-              placeholder: "Organisation",
-            },
-            {
-              name: "area",
-              label: "Area in Transport",
-              type: "text",
-              placeholder: "Area in Transport",
-            },
-            {
-              name: "designation",
-              label: "Designation",
-              type: "text",
-              placeholder: "Designation",
-            },
+            { name: "organisation", label: "Organisation", type: "text", placeholder: "Organisation" },
+            { name: "area", label: "Area in Transport", type: "text", placeholder: "Area in Transport" },
+            { name: "designation", label: "Designation", type: "text", placeholder: "Designation" },
           ].map((field) => (
             <div key={field.name} className="w-full md:w-[calc(25%-18px)]">
               <label className="block text-black text-[14px] font-medium mb-1">
@@ -91,7 +79,7 @@ export default function MembershipForm() {
               Continue
             </motion.button>
           </div>
-        </form>
+        </motion.form>
       </div>
     </section>
   );

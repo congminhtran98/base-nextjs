@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const membershipPlans = [
   {
@@ -32,12 +33,15 @@ const membershipPlans = [
 ];
 
 export default function MembershipPlans() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.3, once: true });
+
   return (
-    <section className="w-full py-16 px-6">
+    <section ref={ref} className="w-full py-16 px-6">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
@@ -45,13 +49,13 @@ export default function MembershipPlans() {
             <motion.div
               key={plan.title}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{
                 duration: 0.6,
                 delay: index * 0.2,
                 ease: "easeOut",
               }}
-              className={`p-6 rounded-lg shadow-md bg-[#F8F8FF]  ${
+              className={`p-6 rounded-lg shadow-md bg-[#F8F8FF] ${
                 index === 2 ? "col-span-1 md:col-span-2" : ""
               }`}
             >
