@@ -9,7 +9,11 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { name: "About Us", href: "/about", submenu: [] },
   { name: "Login", href: "/login", submenu: [] },
-  { name: "Membership", href: "/membership", submenu: [] },
+  {
+    name: "Membership",
+    href: "/membership/list",
+    submenu: [{ name: "Members Directory", href: "/membership/list" }, { name: "Join Us", href: "/membership/join-us" }],
+  },
   { name: "Advocacy & Policy", href: "/advocacy-policy", submenu: [] },
   {
     name: "Events",
@@ -77,13 +81,14 @@ export default function Navbar() {
                 <span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full" />
               </Link>
 
+              {/* Menu cấp 2 */}
               {link.submenu.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, scaleY: 0 }}
                   animate={{ opacity: 1, scaleY: 1 }}
                   exit={{ opacity: 0, scaleY: 0 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }} // Hiệu ứng chậm hơn
-                  className="absolute left-0 mt-2 bg-white shadow-lg rounded-md w-48 hidden group-hover:block z-50 origin-top"
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="absolute left-0 mt-0 bg-white shadow-lg rounded-md w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
                 >
                   {link.submenu.map((sub) => (
                     <Link

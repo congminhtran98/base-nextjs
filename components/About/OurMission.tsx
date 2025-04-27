@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 
 const timelineEvents = [
   {
@@ -25,9 +26,12 @@ const timelineEvents = [
 ];
 
 export default function CustomTimeline() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.2, once: true }); // Chỉ chạy 1 lần
+
   return (
     <section className="w-full bg-white py-16 px-6 relative overflow-hidden">
-      <div className="container mx-auto max-w-5xl">
+      <motion.div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl font-bold text-center mb-10">Our Mission</h2>
 
         <div className="relative">
@@ -37,10 +41,15 @@ export default function CustomTimeline() {
           {/* Danh sách sự kiện */}
           {timelineEvents.map((event, index) => (
             <motion.div
+              ref={ref}
               key={event.id}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2,
+                ease: "easeOut",
+              }}
               className={`relative flex ${
                 event.position === "left"
                   ? "justify-end pr-8 text-right"
@@ -71,7 +80,7 @@ export default function CustomTimeline() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Hình ảnh góc trên phải */}
       <Image

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useRef } from "react";
 
 import "@/public/css/button-override.css";  // Import thêm các file custom
 import "@/public/css/custom-dropdown.css";
