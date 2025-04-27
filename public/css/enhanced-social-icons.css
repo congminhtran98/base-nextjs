@@ -1,0 +1,68 @@
+/* Enhanced Social Icons Styles */
+
+/* Footer social icons */
+.footer-widget .social {
+    padding: 0;
+    margin: 20px 0 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer-widget .social li {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-widget .social li a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    margin-left: 5px;
+    background-color: #fff;
+    color: #aa0000; /* Dark red color - matching header */
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-widget .social li a:hover {
+    background-color: #aa0000;
+    color: #fff;
+    border-color: #aa0000;
+}
+
+/* Specific colors for different social networks - removed to match header style */
+/* Hover effects now match header style */
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .footer-widget .social {
+        justify-content: center;
+    }
+    
+    .footer-widget .social li {
+        margin: 0 5px 10px;
+    }
+    
+    .footer-widget .social li a {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .footer-widget .social li a {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+    }
+}

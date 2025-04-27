@@ -1,0 +1,189 @@
+/* Responsive styles for navbar social icons and login button */
+
+/* Default styles for larger screens */
+.navbar-right-section {
+  position: absolute;
+  right: -180px; /* Moved even further to the right to avoid overlapping with Technology menu */
+  top: 45px;
+  display: flex !important; /* Use !important to ensure it's always displayed */
+  align-items: center;
+  height: 52px;
+  z-index: 100; /* Ensure it's above other elements */
+  transition: none; /* Disable transitions that might cause flickering */
+}
+
+/* Social icons styling */
+.navbar-social-icons {
+  display: inline-block;
+  margin-right: 20px; /* Increased spacing between social icons and login button */
+}
+
+.navbar-social-icons a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 50%;
+  margin-left: 5px;
+  background-color: #fff;
+  color: #aa0000; /* Dark red color */
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.navbar-social-icons a:hover {
+  background-color: #aa0000;
+  color: #fff;
+  border-color: #aa0000;
+}
+
+/* Login button styling */
+.navbar-login-btn {
+  display: inline-block;
+  background-color: #aa0000; /* Dark red color */
+  color: #fff;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar-login-btn:hover {
+  background-color: #c80000;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 991px) {
+  .navbar-right-section {
+    position: static;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .navbar-default .navbar-collapse {
+    float: none;
+    margin-left: 0;
+    width: 100%;
+    clear: both;
+  }
+  
+  .navbar-header {
+    float: none;
+    text-align: center;
+    padding-bottom: 0;
+  }
+  
+  .navbar-brand {
+    float: none;
+    display: inline-block;
+  }
+  
+  .navbar-default .navbar-nav {
+    margin: 0;
+    float: none;
+    text-align: center;
+  }
+  
+  .navbar-default .navbar-nav > li {
+    float: none;
+    display: inline-block;
+  }
+}
+
+/* Small screens (mobile phones) */
+@media (max-width: 767px) {
+  .navbar-right-section {
+    position: static !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    margin-top: 0 !important;
+    padding: 15px 0 !important;
+    background-color: #f8f8f8 !important;
+    border-top: 1px solid #e7e7e7 !important;
+    width: 100% !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    right: auto !important;
+  }
+  
+  .navbar-social-icons {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+  
+  .navbar-default .navbar-nav > li {
+    display: block;
+    border: none;
+    height: auto;
+    text-align: left;
+  }
+  
+  .navbar-default .navbar-nav > li:first-child {
+    border-left: none;
+  }
+  
+  /* Adjust dropdown menu positioning for mobile */
+  .dropdown-menu {
+    position: static;
+    float: none;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    background-color: #f8f8f8;
+    padding-left: 20px;
+  }
+  
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #777;
+    padding: 8px 15px;
+  }
+  
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #aa0000;
+    background-color: transparent;
+  }
+  
+  /* Override hover behavior for mobile */
+  .navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: none;
+  }
+  
+  .navbar-nav > li.dropdown.open > .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .navbar-brand img {
+    width: 80%; /* Reduce logo size on very small screens */
+    height: auto;
+  }
+  
+  .navbar-social-icons a {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+  }
+  
+  .navbar-login-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+}

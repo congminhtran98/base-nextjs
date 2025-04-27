@@ -1,0 +1,60 @@
+/* Custom Dropdown Menu Styles */
+
+/* Make dropdown show on hover */
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Smooth transition effect */
+.dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    margin-top: 10px;
+    left: 0; /* Align from left */
+    right: auto;
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 10px 0;
+    min-width: 200px; /* Ensure dropdown is wide enough */
+}
+
+/* Style dropdown menu items */
+.dropdown-menu > li > a {
+    padding: 8px 20px;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: #f5f5f5;
+    color: #000;
+    padding-left: 25px; /* Slight indent on hover */
+}
+
+/* Add a small arrow indicator */
+.navbar-nav > li.dropdown > a:after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    vertical-align: middle;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+/* Hide the caret that was added with Bootstrap */
+.navbar-nav > li.dropdown > a > .caret {
+    display: none;
+}

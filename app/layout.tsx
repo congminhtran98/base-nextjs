@@ -5,6 +5,13 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+import "@/public/css/button-override.css";  // Import thêm các file custom
+import "@/public/css/custom-dropdown.css";
+import "@/public/css/enhanced-social-icons.css";
+import "@/public/css/popup-form.css";
+import "@/public/css/responsive-navbar.css";
+import "@/public/css/zoom-fix.css";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter", // Tạo biến CSS

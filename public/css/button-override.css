@@ -1,0 +1,213 @@
+/* Standardized Button Styles for Consistency */
+
+/* Common button properties for all buttons */
+.btn,
+.btn-primary,
+.main-button,
+.view-all-btn,
+.load-more-btn,
+.second-section .load-more-btn,
+.navbar-login-btn,
+.slider-button,
+.site-slider .slider-caption .slider-button,
+.newsletter-button,
+.membership-content .btn,
+.search-btn,
+.register-btn,
+.newsletter-form button,
+button[type="submit"] {
+  /* Standard colors */
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+  color: #ffffff !important;
+  
+  /* Standard size and padding */
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  
+  /* Standard font */
+  font-family: 'Open Sans', Arial, sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  
+  /* Standard border and effects */
+  border-radius: 4px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+
+/* Hover state for all buttons */
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active,
+.main-button:hover,
+.view-all-btn:hover,
+.load-more-btn:hover,
+.second-section .load-more-btn:hover,
+.navbar-login-btn:hover,
+.slider-button:hover,
+.site-slider .slider-caption .slider-button:hover,
+.newsletter-button:hover,
+.membership-content .btn:hover,
+.search-btn:hover,
+.register-btn:hover,
+.newsletter-form button:hover,
+button[type="submit"]:hover {
+  background-color: #cc0000 !important;
+  border-color: #cc0000 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Special case for navbar login button */
+.navbar-login-btn {
+  padding: 8px 15px !important;
+  margin-left: 15px !important;
+  font-size: 13px !important;
+  border-radius: 4px !important;
+}
+
+/* Special case for slider button */
+.site-slider .slider-caption .slider-button {
+  background-color: rgba(255, 0, 0, 0.9) !important;
+  padding: 12px 25px !important;
+  font-size: 16px !important;
+  margin-top: 30px !important;
+  border-radius: 4px !important;
+}
+
+.site-slider .slider-caption .slider-button:hover {
+  background-color: rgba(204, 0, 0, 1) !important;
+}
+
+/* Special case for view-all and load-more buttons */
+.view-all-btn,
+.load-more-btn,
+.second-section .load-more-btn {
+  margin-top: 20px !important;
+}
+
+/* Filter buttons */
+.filter-options .btn {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #dddddd !important;
+  padding: 5px 15px !important;
+  font-size: 13px !important;
+  border-radius: 20px !important;
+  margin-right: 5px !important;
+  margin-bottom: 5px !important;
+  text-transform: none !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+}
+
+.filter-options .btn:hover,
+.filter-options .btn.active {
+  background-color: #ff0000 !important;
+  color: #ffffff !important;
+  border-color: #ff0000 !important;
+}
+
+/* Event link buttons */
+.event-link {
+  color: #ff0000 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.event-link i {
+  margin-left: 5px !important;
+  transition: all 0.3s ease !important;
+}
+
+.event-link:hover {
+  color: #cc0000 !important;
+}
+
+.event-link:hover i {
+  transform: translateX(5px) !important;
+}
+
+/* Link-style buttons */
+.news-link,
+.case-study-link {
+  color: #ff0000 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.news-link:hover,
+.case-study-link:hover {
+  color: #cc0000 !important;
+  text-decoration: underline !important;
+}
+
+/* Pagination buttons */
+.pagination a {
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 5px !important;
+  border-radius: 50% !important;
+  background: #f1f1f1 !important;
+  color: #666 !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+}
+
+.pagination a:hover,
+.pagination a.active {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
+
+.pagination a.prev,
+.pagination a.next {
+  width: auto !important;
+  padding: 0 15px !important;
+  border-radius: 20px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn,
+  .btn-primary,
+  .main-button,
+  .view-all-btn,
+  .load-more-btn,
+  .second-section .load-more-btn,
+  .navbar-login-btn,
+  .slider-button,
+  .site-slider .slider-caption .slider-button,
+  .newsletter-button,
+  .membership-content .btn,
+  .search-btn,
+  .register-btn,
+  .newsletter-form button,
+  button[type="submit"] {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+  
+  .site-slider .slider-caption .slider-button {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+}

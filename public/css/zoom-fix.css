@@ -1,0 +1,111 @@
+/* Fix for zoom issues with navbar elements */
+
+/* Ensure navbar elements are always visible regardless of zoom level */
+.navbar-right-section {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Adjust position based on screen width */
+@media (min-width: 992px) {
+  .navbar-right-section {
+    position: absolute !important;
+    right: -180px !important;
+    top: 45px !important;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .navbar-right-section {
+    position: static !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin: 15px 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-right-section {
+    position: static !important;
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 15px 0 !important;
+    background-color: #f8f8f8 !important;
+    border-top: 1px solid #e7e7e7 !important;
+  }
+  
+  /* Ensure navbar-right-section is inside navbar-collapse on mobile */
+  .navbar-collapse.in .navbar-right-section,
+  .navbar-collapse.collapsing .navbar-right-section {
+    display: flex !important;
+  }
+}
+
+/* Fix for zoom detection */
+html {
+  zoom: 1;
+}
+
+/* Video slider fixes for different zoom levels */
+.site-slider .video-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.site-slider #slider-video {
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Ensure overlay works with video */
+.site-slider .video-slider .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive video slider */
+@media (max-width: 767px) {
+  .site-slider .video-slider {
+    max-height: 400px;
+  }
+  
+  .site-slider #slider-video {
+    min-height: 300px;
+  }
+  
+  .site-slider .slider-caption {
+    top: 15%;
+  }
+  
+  .site-slider .slider-caption .title {
+    width: 80%;
+    padding: 15px;
+  }
+  
+  .site-slider .slider-caption .title p {
+    font-size: 16px;
+  }
+}
+
+/* Additional fix for IE/Edge */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .navbar-right-section {
+    display: flex !important;
+    visibility: visible !important;
+  }
+  
+  .site-slider #slider-video {
+    width: 100%;
+    height: 550px;
+  }
+}

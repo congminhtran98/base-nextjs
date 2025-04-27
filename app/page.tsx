@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import HomeSlider from "@/components/Home/HomeBanner";
 import AboutUs from "@/components/Home/AboutUs";
 import LatestNews from "@/components/Home/LatestNews";
 import ComingUp from "@/components/Home/ComingUp";
@@ -9,6 +10,7 @@ import LinkedInFeed from "@/components/Home/LinkedInPosts";
 export default function Home() {
   return (
     <div className=" mt-[84px]">
+      <HomeSlider />
       <AboutUs />
       <LatestNews />
       <ComingUp />
