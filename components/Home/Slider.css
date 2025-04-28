@@ -1,0 +1,20 @@
+/* Custom Pagination */
+.custom-pagination .swiper-pagination-bullet {
+  width: 16px;
+  height: 16px;
+  border: solid 1px #39c8e2 !important; 
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  width: 16px; /* Kéo dài thành hình pill */
+  height: 16px;
+  background-color: #39c8e2; /* Màu đen */
+  border-radius: 10px;
+}
+
+/* Fix Swiper Pagination Bị Dài */
+.swiper-pagination-horizontal {
+  width: auto !important; /* Chỉ lấy đúng kích thước của các chấm */
+}
