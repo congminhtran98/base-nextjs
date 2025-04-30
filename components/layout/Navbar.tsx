@@ -8,19 +8,21 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "About Us", href: "/about", submenu: [] },
-  { name: "Login", href: "/login", submenu: [] },
+  // { name: "Login", href: "/login", submenu: [] },
   {
     name: "Membership",
     href: "/membership/list",
     submenu: [{ name: "Members Directory", href: "/membership/list" }, { name: "Join Us", href: "/membership/join-us" }],
   },
-  { name: "Advocacy & Policy", href: "/advocacy-policy", submenu: [] },
+  // { name: "Advocacy & Policy", href: "/advocacy-policy", submenu: [] },
   {
     name: "Events",
     href: "/events",
     submenu: [
       { name: "Upcoming Events", href: "/events/upcoming" },
       { name: "Past Events", href: "/events/past" },
+      {name: "Key Activities", href: "/events/key-activities"},
+      {name: "Gallery", href: "/events/gallery"}
     ],
   },
   {

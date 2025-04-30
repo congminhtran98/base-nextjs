@@ -37,7 +37,7 @@ const MainSlider = () => {
           spaceBetween={0}
           slidesPerView={1}
           loop
-          pagination={{ clickable: true, el: ".custom-pagination" }}
+          
           navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
           speed={800}
           onInit={(swiper) => {
@@ -99,7 +99,7 @@ const MainSlider = () => {
       </button>
 
       {/* Pagination */}
-      <div className="custom-pagination flex justify-center mt-4"></div>
+    
 
       {/* Tailwind CSS Keyframes for Zoom Effect */}
       <style jsx>{`
