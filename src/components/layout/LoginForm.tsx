@@ -3,6 +3,8 @@
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const {
@@ -10,9 +12,21 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
-  const onSubmit = (data: any) => {
-    console.log("Login Data:", data);
+  const onSubmit = async (data: any) => {
+    const result = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      console.error("Login failed:", result.error);
+      // Hiển thị lỗi nếu cần (ví dụ: thêm state để show thông báo)
+    } else {
+      router.push("/"); // Chuyển hướng sau khi đăng nhập thành công
+    }
   };
 
   return (
@@ -23,7 +37,6 @@ export default function LoginForm() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="bg-white p-8 max-w-[668px] w-full text-center"
       >
-        {/* Logo */}
         <div className="flex justify-center mb-4">
           <Image
             src="/images/logo.svg"
@@ -32,19 +45,13 @@ export default function LoginForm() {
             height={70}
           />
         </div>
-
-        {/* Title */}
         <h2 className="text-2xl font-normal text-black mb-[50px]">
           Member Login
         </h2>
-
-        {/* Form */}
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* User Name */}
           <div className="relative">
             <input
-              {...register("username", { required: true })}
+              {...register("username", { required: "User Name is required" })}
               placeholder="User Name"
               className="w-full border text-base border-gray-300 px-4 pt-5 pb-2 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
             />
@@ -52,14 +59,15 @@ export default function LoginForm() {
               User Name
             </label>
             {errors.username && (
-              <p className="text-red-500 text-sm mt-1">User Name is required</p>
+              <p className="text-red-500 text-sm mt-1">
+                {typeof errors.username.message === "string" &&
+                  errors.username.message}
+              </p>
             )}
           </div>
-
-          {/* Password */}
           <div className="relative">
             <input
-              {...register("password", { required: true })}
+              {...register("password", { required: "Password is required" })}
               type="password"
               placeholder="Password"
               className="w-full border text-base border-gray-300 px-4 pt-5 pb-2 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
@@ -68,11 +76,12 @@ export default function LoginForm() {
               Password
             </label>
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">Password is required</p>
+              <p className="text-red-500 text-sm mt-1">
+                {typeof errors.password.message === "string" &&
+                  errors.password.message}
+              </p>
             )}
           </div>
-
-          {/* Submit Button */}
           <div className="md:text-left">
             <motion.button
               type="submit"

@@ -19,11 +19,11 @@ export default function Home() {
       <LatestNewsSection />
       <MainSlider />
 
-      <AboutUs />
-      <LatestNews />
+      {/* <AboutUs />
+      <LatestNews /> */}
       {/* <ComingUp /> */}
-      <Membership />
-      <LinkedInFeed />
+      {/* <Membership />
+      <LinkedInFeed /> */}
     </div>
   );
 }
