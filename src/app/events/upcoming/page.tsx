@@ -1,3 +1,5 @@
+'use client'
+
 import AboutHeroIntro from "@/components/About/AboutUsHeroIntro";
 import UpcomingEvents from "@/components/Event/FeaturesEvent";
 import EventSearchPage from "@/components/Event/EventSearchPage";
@@ -5,6 +7,10 @@ import EventSearchPage from "@/components/Event/EventSearchPage";
 import CallToActionSection from "@/components/CallToActionSection";
 
 import { mockEvents } from "@/data/eventData"; // Assuming EventData is a type
+
+import { getUpcomingEvents } from "@/core/services/eventService";
+import { useEffect, useState } from "react";
+import { fetchUpcomingEventData } from "@/core/actions/eventActions";
 
 const featuredEvent = {
   date: { day: "15", month: "Sep", year: "2025" },
@@ -53,6 +59,56 @@ const mockFilters = [
 ];
 
 export default function UpcomingEventsPage() {
+  const [eventData, setEventData] = useState<
+    {
+      eventDate: string;
+      location: string;
+      capacity: number;
+      title: string;
+      description: string;
+      id: string;
+    }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUpcomingEventData()
+      .then((data) => {
+        setEventData(data); // giữ raw data để dùng dưới
+        console.log(data)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch events", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const featuredEvent = eventData[0]
+    ? {
+        date: parseDate(eventData[0].eventDate),
+        time: "09:00 AM - 05:00 PM",
+        location: eventData[0].location,
+        attendees: `${eventData[0].capacity}+ Attendees`,
+        title: eventData[0].title,
+        excerpt: eventData[0].description,
+        category: "Featured",
+        price: "$299",
+        priceLabel: "Starting from",
+        link: `/events/${eventData[0].id}`,
+        image: "/images/p1.jpg", // hardcoded tạm
+        isFeatured: true,
+      }
+    : null;
+
+  const sideEvents = eventData.slice(1, 3).map((e, i) => ({
+    date: parseDate(e.eventDate),
+    title: e.title,
+    location: e.location,
+    link: `/events/${e.id}`,
+    image: `/images/p${i + 2}.jpg`, // dùng tạm ảnh local
+    excerpt: e.description,
+  }));
+
   return (
     <div className="mt-[84px]">
       <AboutHeroIntro
@@ -62,7 +118,9 @@ export default function UpcomingEventsPage() {
         title="ITS Singapore Events"
         description="Join us for a variety of events designed to connect professionals, share knowledge, and advance the field of intelligent transportation systems in Singapore and beyond."
       />
-      <UpcomingEvents featuredEvent={featuredEvent} sideEvents={sideEvents} />
+      {featuredEvent && (
+        <UpcomingEvents featuredEvent={featuredEvent} sideEvents={sideEvents} />
+      )}
       <EventSearchPage
         filterGroups={[
           {
@@ -88,4 +146,14 @@ export default function UpcomingEventsPage() {
       />
     </div>
   );
+}
+
+// Parse từ ISO date sang { day, month, year }
+function parseDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return {
+    day: String(date.getDate()).padStart(2, "0"),
+    month: date.toLocaleString("en-US", { month: "short" }),
+    year: String(date.getFullYear()),
+  };
 }

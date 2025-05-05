@@ -1,10 +1,10 @@
-import type { AxiosInstance, AxiosRequestConfig } from 'axios';
-import axios from 'axios';
-import { getServerSession } from 'next-auth/next';
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
+import { getServerSession } from "next-auth/next";
 
-import { authOptions } from '@/app/api/auth/[...nextauth]';
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 
-const baseUrl = process.env.API_URL;
+const baseUrl = "http://103.249.200.210:3000";
 
 class ApiClient {
   private api: AxiosInstance;
@@ -13,17 +13,13 @@ class ApiClient {
     this.api = axios.create({
       baseURL: baseUrl,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
+  }
 
-    this.api.interceptors.request.use(async (config) => {
-      const session: any = await getServerSession(authOptions);
-      if (session?.accessToken) {
-        config.headers.Authorization = `Bearer ${session.accessToken}`;
-      }
-      return config;
-    });
+  setToken(token: string) {
+    this.api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
   post(
@@ -34,8 +30,8 @@ class ApiClient {
     return this.api.post(url, data, config);
   }
 
-  get(url: string) {
-    return this.api.get(url);
+  get(url: string, config?: AxiosRequestConfig<any>) {
+    return this.api.get(url, config);
   }
 
   put(url: string, { data }: AxiosRequestConfig) {
