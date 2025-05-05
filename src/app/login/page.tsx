@@ -1,4 +1,4 @@
-import HeaderBackgroud from "@/components/store/HeaderBackgroud";
+// import HeaderBackgroud from "@/components/store/HeaderBackgroud";
 import LoginForm from "@/components/layout/LoginForm";
 import Dashboard from "@/components/Membership/MembershipDashboard";
 
@@ -20,7 +20,7 @@ export default function Home() {
       {/* Form đăng nhập */}
       <main className="flex-grow flex flex-col items-center justify-center">
         <LoginForm />
-        <Dashboard />
+        {/* <Dashboard /> */}
       </main>
     </div>
   );
