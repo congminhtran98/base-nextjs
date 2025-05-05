@@ -2,7 +2,7 @@ import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { getServerSession } from 'next-auth/next';
 
-import { authOptions } from '@/api/auth/[...nextauth]';
+import { authOptions } from '@/app/api/auth/[...nextauth]';
 
 const baseUrl = process.env.API_URL;
 

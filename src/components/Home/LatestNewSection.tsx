@@ -40,10 +40,10 @@ const LatestNewsSection = () => {
           {/* News Items */}
           <div className="w-full md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
-              { img: "/images/news1.jpg", title: "Industry Trends 2024", date: "March 15, 2024" },
-              { img: "/images/news2.jpg", title: "Technology Innovations", date: "March 10, 2024" },
-              { img: "/images/news3.jpg", title: "Market Analysis Report", date: "March 5, 2024" },
-              { img: "/images/news4.jpg", title: "Product Updates", date: "March 1, 2024" },
+              { img: "/images/News1.jpg", title: "Industry Trends 2024", date: "March 15, 2024" },
+              { img: "/images/News2.jpg", title: "Technology Innovations", date: "March 10, 2024" },
+              { img: "/images/News3.jpg", title: "Market Analysis Report", date: "March 5, 2024" },
+              { img: "/images/News4.jpg", title: "Product Updates", date: "March 1, 2024" },
             ].map((news, index) => (
               <div
                 key={index}
