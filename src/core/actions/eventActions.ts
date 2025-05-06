@@ -1,6 +1,6 @@
 "use server";
 
-import { getUpcomingEvents, getEventById } from "../services/eventService";
+import { getUpcomingEvents, getEventById, getAllEvents } from "../services/eventService";
 
 export async function fetchUpcomingEventData() {
   try {
@@ -23,5 +23,15 @@ export async function getEventDetail(id: string) {
   } catch (error) {
     console.error("Fetch event details failed:", error);
     return null;
+  }
+}
+
+export async function getAllEventData() {
+  try {
+    const events = await getAllEvents();
+    return events;
+  } catch (error) {
+    console.error("Fetch all events failed:", error);
+    return [];
   }
 }

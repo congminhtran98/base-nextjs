@@ -31,10 +31,10 @@ const CallToActionSection: React.FC<CallToActionProps> = ({
         {type === "button" ? (
           <a
             href="/membership"
-            className="inline-block bg-[#ff0000] text-[#09062f] px-8 py-3 text-sm font-semibold rounded-md uppercase tracking-wider transition-all hover:shadow-lg"
+            className="inline-block !bg-[#ff0000] text-[#09062f] px-8 py-3 text-sm font-semibold rounded-md uppercase tracking-wider transition-all hover:shadow-lg"
           >
             <i className="fa fa-user-plus mr-2 text-white" /> 
-            <span className="text-white">{buttonText}</span>
+            <span className="!text-white">{buttonText}</span>
           </a>
         ) : (
           <form className="relative max-w-xl mx-auto">
@@ -45,7 +45,7 @@ const CallToActionSection: React.FC<CallToActionProps> = ({
             />
             <button
               type="submit"
-              className="absolute right-[5px] top-[5px] bg-white text-[#09062f] px-6 py-2 rounded-md font-medium uppercase tracking-wider transition-all"
+              className="absolute right-[5px] top-[5px] bg-red-600 text-white px-6 py-2 rounded-md font-medium uppercase tracking-wider transition-all"
             >
               Subscribe
             </button>

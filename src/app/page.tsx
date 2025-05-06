@@ -17,7 +17,7 @@ export default function Home() {
       <HomeSlider />
       <UpcomingEventsSection />
       <LatestNewsSection />
-      <MainSlider />
+      {/* <MainSlider /> */}
 
       {/* <AboutUs />
       <LatestNews /> */}

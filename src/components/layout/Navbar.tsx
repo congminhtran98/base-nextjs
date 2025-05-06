@@ -5,24 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
   { name: "About Us", href: "/about", submenu: [] },
-  // { name: "Login", href: "/login", submenu: [] },
   {
     name: "Membership",
     href: "/membership/list",
-    submenu: [{ name: "Members Directory", href: "/membership/list" }, { name: "Join Us", href: "/membership/join-us" }],
+    submenu: [
+      { name: "Members Directory", href: "/membership/list" },
+      { name: "Join Us", href: "/membership/join-us" },
+    ],
   },
-  // { name: "Advocacy & Policy", href: "/advocacy-policy", submenu: [] },
   {
     name: "Events",
     href: "/events",
     submenu: [
       { name: "Upcoming Events", href: "/events/upcoming" },
       { name: "Past Events", href: "/events/past" },
-      {name: "Key Activities", href: "/events/key-activities"},
-      {name: "Gallery", href: "/events/gallery"}
+      { name: "Key Activities", href: "/events/key-activities" },
+      { name: "Gallery", href: "/events/gallery" },
     ],
   },
   {
@@ -36,6 +38,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>(
     {}
@@ -78,12 +81,9 @@ export default function Navbar() {
                 {link.submenu.length > 0 && (
                   <Plus className="w-4 h-4 transition-transform duration-300" />
                 )}
-
-                {/* Hiệu ứng gạch chân */}
                 <span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full" />
               </Link>
 
-              {/* Menu cấp 2 */}
               {link.submenu.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, scaleY: 0 }}
@@ -105,15 +105,50 @@ export default function Navbar() {
               )}
             </div>
           ))}
-        </div>
 
-        {/* Login Button */}
-        <Link
-          href="/login"
-          className="hidden md:block bg-[#6355D8] text-white font-normal text-lg px-9 py-3 rounded-lg hover:bg-purple-700"
-        >
-          Login
-        </Link>
+          {/* Avatar or Login Button */}
+          {status === "authenticated" ? (
+            <div className="relative group">
+              <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="w-9 h-9 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-gray-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"
+                    />
+                  </svg>
+                </div>
+
+                <span className="font-medium text-gray-800">
+                  {session.user?.name || "User"}
+                </span>
+              </div>
+              <div className="absolute right-0 w-40 bg-white shadow-md rounded-md invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 z-50">
+                <button
+                  onClick={() => signOut()}
+                  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden md:block bg-[#6355D8] text-white font-normal text-lg px-9 py-3 rounded-lg hover:bg-purple-700"
+            >
+              Login
+            </Link>
+          )}
+        </div>
 
         {/* Mobile Menu Button */}
         <button className="md:hidden p-2" onClick={toggleMobileMenu}>
@@ -125,7 +160,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Overlay với fade-in chậm hơn */}
+      {/* Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -133,13 +168,13 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }} // Fade chậm hơn
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             onClick={toggleMobileMenu}
           />
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu Sidebar trượt vào chậm hơn */}
+      {/* Mobile Menu Sidebar */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -147,9 +182,8 @@ export default function Navbar() {
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={{ duration: 0.3, ease: "easeOut" }} // Chậm hơn
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {/* Close Button */}
             <button
               className="absolute top-4 right-4"
               onClick={toggleMobileMenu}
@@ -157,7 +191,6 @@ export default function Navbar() {
               <X className="w-6 h-6 text-gray-700" />
             </button>
 
-            {/* Mobile Menu Links */}
             <ul className="mt-8 space-y-4">
               {navLinks.map((link) => (
                 <li key={link.name}>
@@ -174,7 +207,7 @@ export default function Navbar() {
                           animate={{
                             rotate: openSubmenus[link.name] ? 180 : 0,
                           }}
-                          transition={{ duration: 0.2, ease: "easeInOut" }} // Chậm hơn
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
                         >
                           {openSubmenus[link.name] ? (
                             <Minus className="w-5 h-5 text-gray-700" />
@@ -186,14 +219,13 @@ export default function Navbar() {
                     )}
                   </div>
 
-                  {/* Submenu mở rộng mượt hơn */}
                   <AnimatePresence>
                     {link.submenu.length > 0 && openSubmenus[link.name] && (
                       <motion.ul
-                        initial={{ height: 0, opacity: 0, y: -10 }} // Bắt đầu từ 0, trượt nhẹ xuống
-                        animate={{ height: "auto", opacity: 1, y: 0 }} // Mở rộng dần dần
-                        exit={{ height: 0, opacity: 0, y: -10 }} // Khi đóng, trượt lên
-                        transition={{ duration: 0.2, ease: "easeInOut" }} // Hiệu ứng mượt hơn
+                        initial={{ height: 0, opacity: 0, y: -10 }}
+                        animate={{ height: "auto", opacity: 1, y: 0 }}
+                        exit={{ height: 0, opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="pl-4 mt-2 space-y-2 overflow-hidden"
                       >
                         {link.submenu.map((sub) => (
@@ -219,15 +251,38 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* Login Button (Mobile) */}
-            <div className="mt-6">
-              <Link
-                href="/login"
-                className="block text-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
-              >
-                Login
-              </Link>
-            </div>
+            {/* Login / Logout Mobile */}
+            {status === "authenticated" ? (
+              <div className="mt-6 flex items-center space-x-3">
+                <Image
+                  src={session.user?.image || "/images/avatar-placeholder.png"}
+                  alt="Avatar"
+                  width={36}
+                  height={36}
+                  className="rounded-full border border-gray-300"
+                />
+                <div>
+                  <p className="text-gray-800 font-medium">
+                    {session.user?.name || "User"}
+                  </p>
+                  <button
+                    onClick={() => signOut()}
+                    className="text-sm text-red-500 hover:underline"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-6">
+                <Link
+                  href="/login"
+                  className="block text-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
+                >
+                  Login
+                </Link>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

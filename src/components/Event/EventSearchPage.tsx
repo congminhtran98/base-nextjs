@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import EventList, { EventData } from "./EventList";
 
 interface FilterGroup {
@@ -11,10 +13,22 @@ interface EventSearchPageProps {
   events: EventData[];
 }
 
+const EVENTS_PER_PAGE = 6;
+
 const EventSearchPage: React.FC<EventSearchPageProps> = ({
   filterGroups,
   events,
 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(events.length / EVENTS_PER_PAGE);
+  const startIdx = (currentPage - 1) * EVENTS_PER_PAGE;
+  const currentEvents = events.slice(startIdx, startIdx + EVENTS_PER_PAGE);
+
+  const handlePageClick = (n: number) => setCurrentPage(n);
+  const handlePrev = () => setCurrentPage((p) => Math.max(1, p - 1));
+  const handleNext = () => setCurrentPage((p) => Math.min(totalPages, p + 1));
+
   return (
     <div className="container mx-auto px-4 mt-10">
       {/* Title */}
@@ -68,32 +82,46 @@ const EventSearchPage: React.FC<EventSearchPageProps> = ({
       </div>
 
       {/* Event List */}
-      <EventList events={events} />
+      <EventList events={currentEvents} />
 
       {/* Pagination */}
-      <div className="flex justify-center mt-12 gap-2">
+      <div className="flex justify-center mt-12 gap-2 flex-wrap">
         <a
-          className="pagination-btn px-4 py-2 bg-[#f1f1f1] rounded-full font-semibold text-[#666] hover:bg-[#39c8e2] hover:text-white"
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handlePrev();
+          }}
+          className="pagination-btn px-4 py-2 bg-[#f1f1f1] rounded-full font-semibold text-[#666] hover:bg-[#39c8e2] hover:text-white"
         >
           <i className="fa fa-angle-left mr-1" /> Prev
         </a>
-        {[1, 2, 3, 4].map((n) => (
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
           <a
             key={n}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handlePageClick(n);
+            }}
             className={`pagination-btn w-[40px] h-[40px] flex items-center justify-center rounded-full font-semibold ${
-              n === 1
+              n === currentPage
                 ? "bg-[#39c8e2] text-white"
                 : "bg-[#f1f1f1] text-[#666] hover:bg-[#39c8e2] hover:text-white"
             }`}
-            href="#"
           >
             {n}
           </a>
         ))}
+
         <a
-          className="pagination-btn px-4 py-2 bg-[#f1f1f1] rounded-full font-semibold text-[#666] hover:bg-[#39c8e2] hover:text-white"
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNext();
+          }}
+          className="pagination-btn px-4 py-2 bg-[#f1f1f1] rounded-full font-semibold text-[#666] hover:bg-[#39c8e2] hover:text-white"
         >
           Next <i className="fa fa-angle-right ml-1" />
         </a>

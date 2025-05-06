@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import AboutHeroIntro from "@/components/About/AboutUsHeroIntro";
 import UpcomingEvents from "@/components/Event/FeaturesEvent";
@@ -9,8 +9,12 @@ import CallToActionSection from "@/components/CallToActionSection";
 import { mockEvents } from "@/data/eventData"; // Assuming EventData is a type
 
 import { getUpcomingEvents } from "@/core/services/eventService";
-import { useEffect, useState } from "react";
-import { fetchUpcomingEventData } from "@/core/actions/eventActions";
+import { use, useEffect, useState } from "react";
+import {
+  fetchUpcomingEventData,
+  getAllEventData,
+} from "@/core/actions/eventActions";
+import { EventData, EventDataAll } from "@/core/types/event";
 
 const featuredEvent = {
   date: { day: "15", month: "Sep", year: "2025" },
@@ -58,29 +62,77 @@ const mockFilters = [
   "Webinar",
 ];
 
+// interface EventData {
+//   eventDate: string;
+//   location: string;
+//   capacity: number;
+//   title: string;
+//   description: string;
+//   id: string;
+// }
+
+// interface EventDataAll {
+//   title: string;
+//   excerpt: string;
+//   date: { day: string; month: string; year: string };
+//   time: string;
+//   location: string;
+//   category: string;
+//   status: "open" | "limited" | "full";
+//   image: string;
+//   link: string;
+// }
+
 export default function UpcomingEventsPage() {
-  const [eventData, setEventData] = useState<
-    {
-      eventDate: string;
-      location: string;
-      capacity: number;
-      title: string;
-      description: string;
-      id: string;
-    }[]
-  >([]);
+  const [eventData, setEventData] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [allEvents, setAllEvents] = useState<EventDataAll[]>([]);
 
   useEffect(() => {
     fetchUpcomingEventData()
       .then((data) => {
         setEventData(data); // giữ raw data để dùng dưới
-        console.log(data)
+        console.log(data);
       })
       .catch((err) => {
         console.error("Failed to fetch events", err);
       })
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    getAllEventData()
+      .then((data) => {
+        console.log("All events data:", data);
+        // ❌ Chưa setAllEvents
+        const mapped = data.map(
+          (
+            e: {
+              title: any;
+              description: any;
+              eventDate: string;
+              location: any;
+              id: any;
+            },
+            i: number
+          ) => ({
+            title: e.title,
+            excerpt: e.description,
+            date: parseDate(e.eventDate),
+            location: e.location,
+            link: `/events/${e.id}`,
+            image: `/images/p${(i % 5) + 1}.jpg`,
+            category: "Conference",
+            status: (["open", "limited", "full"] as const)[i % 3], // fake status
+            time: "09:00 - 17:00",
+          })
+        );
+
+        setAllEvents(mapped); // ✅ cần thêm dòng này
+      })
+      .catch((err) => {
+        console.error("Failed to fetch all events", err);
+      });
   }, []);
 
   const featuredEvent = eventData[0]
@@ -135,7 +187,7 @@ export default function UpcomingEventsPage() {
             ],
           },
         ]}
-        events={mockEvents}
+        events={allEvents}
       />
       ;
       <CallToActionSection

@@ -5,10 +5,10 @@ export interface EventData {
   title: string;
   excerpt: string;
   date: { day: string; month: string; year: string };
-  time: string;
+  time?: string;
   location: string;
-  category: string;
-  status: "open" | "limited" | "full";
+  category?: string;
+  status?: "open" | "limited" | "full";
   image: string;
   link: string;
 }
