@@ -33,8 +33,7 @@ export async function getRegistrationsByEvent(eventId: string) {
 // POST: Đăng ký tham gia sự kiện
 export async function registerForEvent(payload: {
   eventId: string;
-  userId: string;
-  notes?: string;
+  status: "pending";
 }) {
   const response = await api.post("/event-registrations/register", {
     data: payload,

@@ -5,6 +5,7 @@ import Link from "next/link";
 interface PostInfo {
   id: string;
   title: string;
+  content: string;
   summary: string;
   date: string;
   image: string;

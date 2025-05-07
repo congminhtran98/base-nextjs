@@ -1,8 +1,6 @@
+// constant/axios.ts
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import axios from "axios";
-import { getServerSession } from "next-auth/next";
-
-import { authOptions } from "@/app/api/auth/[...nextauth]";
 
 const baseUrl = "http://103.249.200.210:3000";
 
@@ -22,11 +20,7 @@ class ApiClient {
     this.api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 
-  post(
-    url: string,
-    { data }: AxiosRequestConfig,
-    config?: AxiosRequestConfig<any>
-  ) {
+  post(url: string, { data }: AxiosRequestConfig, config?: AxiosRequestConfig<any>) {
     return this.api.post(url, data, config);
   }
 
@@ -42,5 +36,6 @@ class ApiClient {
     return this.api.delete(url);
   }
 }
+
 const api = new ApiClient();
 export default api;

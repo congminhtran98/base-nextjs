@@ -2,19 +2,34 @@
 import AboutHeroIntro from "@/components/About/AboutUsHeroIntro";
 import CallToActionSection from "@/components/CallToActionSection";
 import UpcomingEvents from "@/components/Event/FeaturesEvent";
+import FeaturedPostSection from "@/components/FeaturesPostSection";
 // import EventSearchPage from "@/components/Event/EventSearchPage";
-
 
 import { mockEvents } from "@/data/eventData"; // Assuming EventData is a type
 
 import { getUpcomingEvents } from "@/core/services/eventService";
 import { use, useEffect, useState } from "react";
-import {getAllPostsData, getPostByIdDetail } from "@/core/actions/postActions"
+import { getAllPostsData, getPostByIdDetail } from "@/core/actions/postActions";
 import {
   fetchUpcomingEventData,
   getAllEventData,
 } from "@/core/actions/eventActions";
 import { EventData, EventDataAll } from "@/core/types/event";
+
+interface PostInfo {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  date: string;
+  image: string;
+  author?: {
+    name: string;
+    role?: string;
+    avatar?: string;
+  };
+  link: string;
+}
 
 const featuredEvent = {
   date: { day: "15", month: "Sep", year: "2025" },
@@ -62,83 +77,80 @@ const mockFilters = [
   "Webinar",
 ];
 export default function SmartMobility() {
-  const [eventData, setEventData] = useState<EventData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [allEvents, setAllEvents] = useState<EventDataAll[]>([]);
-  
-    useEffect(() => {
-      fetchUpcomingEventData()
-        .then((data) => {
-          setEventData(data); // giữ raw data để dùng dưới
-          console.log(data);
-        })
-        .catch((err) => {
-          console.error("Failed to fetch events", err);
-        })
-        .finally(() => setLoading(false));
-    }, []);
-  
-    useEffect(() => {
-      getAllEventData()
-        .then((data) => {
-          console.log("All events data:", data);
-          // ❌ Chưa setAllEvents
-          const mapped = data.map(
-            (
-              e: {
-                title: any;
-                description: any;
-                eventDate: string;
-                location: any;
-                id: any;
-              },
-              i: number
-            ) => ({
-              title: e.title,
-              excerpt: e.description,
-              date: parseDate(e.eventDate),
-              location: e.location,
-              link: `/events/${e.id}`,
-              image: `/images/p${(i % 5) + 1}.jpg`,
-              category: "Conference",
-              status: (["open", "limited", "full"] as const)[i % 3], // fake status
-              time: "09:00 - 17:00",
-            })
-          );
-  
-          setAllEvents(mapped); // ✅ cần thêm dòng này
-        })
-        .catch((err) => {
-          console.error("Failed to fetch all events", err);
-        });
-    }, []);
-  
-    const featuredEvent = eventData[0]
-      ? {
-          date: parseDate(eventData[0].eventDate),
-          time: "09:00 AM - 05:00 PM",
-          location: eventData[0].location,
-          attendees: `${eventData[0].capacity}+ Attendees`,
-          title: eventData[0].title,
-          excerpt: eventData[0].description,
-          category: "Featured",
-          price: "$299",
-          priceLabel: "Starting from",
-          link: `/events/${eventData[0].id}`,
-          image: "/images/p1.jpg", // hardcoded tạm
-          isFeatured: true,
-        }
-      : null;
-  
-    const sideEvents = eventData.slice(1, 3).map((e, i) => ({
-      date: parseDate(e.eventDate),
-      title: e.title,
-      location: e.location,
-      link: `/events/${e.id}`,
-      image: `/images/p${i + 2}.jpg`, // dùng tạm ảnh local
-      excerpt: e.description,
-    }));
-  
+  // const [eventData, setEventData] = useState<EventData[]>([]);
+  const [loading, setLoading] = useState(true);
+  // const [allEvents, setAllEvents] = useState<EventDataAll[]>([]);
+
+  const [allPosts, setAllPosts] = useState<PostInfo[]>([]); // All posts data
+
+  // useEffect(() => {
+  //   fetchUpcomingEventData()
+  //     .then((data) => {
+  //       setEventData(data); // giữ raw data để dùng dưới
+  //       console.log(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Failed to fetch events", err);
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, []);
+
+  useEffect(() => {
+    getAllPostsData()
+      .then((data) => {
+        const mapped = data.map((e: any, i: number) => ({
+          id: e.id,
+          title: e.title,
+          summary: e.content,
+          content: e.content,
+          date: e.createdAt,
+          image: `/images/p${(i % 5) + 1}.jpg`, // fake image
+          link: `/industry/${e.id}`,
+          author: {
+            name: e.author?.fullName || "Unknown",
+            role: e.author?.role || "Contributor",
+            avatar: `/images/avatar${(i % 3) + 1}.jpg`, // fake avatar
+          },
+        }));
+        setAllPosts(mapped);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch all posts", err);
+      });
+  }, []);
+
+  const featuredEvent = allPosts[0]
+    ? {
+        date: `${parseDate(allPosts[0].date).day} ${parseDate(allPosts[0].date).month} ${parseDate(allPosts[0].date).year}`,
+        time: "09:00 AM - 05:00 PM", // giả định
+        location: "Singapore", // fake
+        attendees: "300+ Attendees", // fake
+        title: allPosts[0].title,
+        excerpt: allPosts[0].summary,
+        category: "Featured",
+        price: "$299", // giả định có giá
+        priceLabel: "Starting from",
+        link: allPosts[0].link,
+        image: allPosts[0].image,
+        isFeatured: true,
+        id: allPosts[0].id,
+        content: allPosts[0].content,
+        summary: allPosts[0].summary, // Add the missing summary property
+      }
+    : null;
+
+  const sideEvents = allPosts.slice(1, 3).map((e, i) => ({
+    id: e.id,
+    content: e.content,
+    summary: e.summary,
+    date: `${parseDate(e.date).day} ${parseDate(e.date).month} ${parseDate(e.date).year}`,
+    title: e.title,
+    location: "Singapore", // fake location
+    link: e.link,
+    image: e.image,
+    excerpt: e.summary,
+  }));
+
   return (
     <div className="mt-[84px]">
       <AboutHeroIntro
@@ -148,8 +160,14 @@ export default function SmartMobility() {
         title="Smart Mobility Solutions"
         description="Smart mobility leverages technology and innovation to create more efficient, sustainable, and user-friendly transportation systems that enhance urban living and reduce environmental impact."
       />
-      {featuredEvent && (
+      {/* {featuredEvent && (
         <UpcomingEvents featuredEvent={featuredEvent} sideEvents={sideEvents} />
+      )} */}
+      {featuredEvent && (
+        <FeaturedPostSection
+          featuredPost={featuredEvent}
+          sidePosts={sideEvents}
+        />
       )}
       <CallToActionSection
         type="form"
